@@ -1,7 +1,14 @@
 .new-task {
-    display: flex;
-    margin-top: 16px;
-    background-color: #f2f2f2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  padding: 8px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  position: relative;
+  width: 50vw;
+  transition: border-color 0.3s;
   }
   
 .new-task input {

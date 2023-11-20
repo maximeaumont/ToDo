@@ -11,7 +11,8 @@ interface TaskProps {
 }
 
 const Task: React.FC<TaskProps> = ({ task, onDelete, onEdit }) => (
-  <li>
+  <li className="task">
+    <input type="checkbox" className="task-checkbox" />
     <span>{task.length > 50 ? `${task.substring(0, 50)}...` : task}</span>
     <div className="edit-delete-container">
       <EditButton onClick={onEdit} />
