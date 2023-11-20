@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.tsx
+import { useEffect, useState } from 'react';
+import './App.css';
+import TaskList from './components/TaskList/TaskList';
+import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    document.title = 'Todo List'; // Mettez le titre souhaité ici
+  }, []);
+
+  const [tasks, setTasks] = useState<string[]>([]);
+
+  const addTask = (newTask: string) => {
+    setTasks([...tasks, newTask]);
+  };
+
+  const deleteTask = (index: number) => {
+    const updatedTasks = [...tasks];
+    updatedTasks.splice(index, 1);
+    setTasks(updatedTasks);
+  };
+
+  const editTask = () => {
+    console.log('Edit');
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-container">
+      <h1>Todo List</h1>
+      <TaskList tasks={tasks} onDelete={deleteTask} onEdit={editTask} />
+      <AddTaskForm onAdd={addTask} />
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,22 @@
+/* Task.css */
+.edit-delete-container {
+    display: flex;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  padding: 8px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  position: relative;
+  width: 50vw;
+  border: 2px solid #f2f2f2;
+  transition: border-color 0.3s; /* Ajout de la transition pour une animation fluide */
+}
+
+li:hover {
+  border: 2px solid #535bf2; /* Couleur de la bordure au survol */
+}
