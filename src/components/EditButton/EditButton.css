@@ -1,0 +1,25 @@
+/* EditButton.css */
+.edit-button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.25s, border-color 0.25s;
+  }
+
+  .edit-button {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+    fill: #213547;
+    margin-left: 8px;
+  }
+  
+  .edit-button:hover {
+    background-color: #535bf2;
+    border-color: #535bf2;
+    fill: #f2f2f2;
+  }
+  
