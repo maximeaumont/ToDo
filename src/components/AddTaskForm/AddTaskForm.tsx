@@ -17,6 +17,12 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onAdd }) => {
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addTask();
+    }
+  };
+
   return (
     <li className="new-task">
       <input
@@ -24,6 +30,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onAdd }) => {
         placeholder="Nouvelle tâche"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
+        onKeyPress={handleKeyPress} // Ajout de l'événement onKeyPress
       />
       <AddButton onClick={addTask} />
     </li>
