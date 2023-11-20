@@ -1,0 +1,5 @@
+.App {
+  font-family: 'Arial', sans-serif; /* Choisissez une police */
+  color: #333; /* Couleur de texte standard */
+  padding-left: 260px; /* Ajuster en fonction de la NavBar */
+}
