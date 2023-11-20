@@ -50,3 +50,9 @@
 .task-checkbox:checked + span {
   color: #535bf2; /* Couleur du texte lorsque la checkbox est cochée */
 }
+
+@media screen and (max-width: 768px) {
+  .task {
+    width: 90vw; /* Supprimez la marge sur les côtés pour les écrans plus larges */
+  }
+}
