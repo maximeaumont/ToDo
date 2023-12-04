@@ -1,20 +1,20 @@
-// src/components/NavBar/NavBar.tsx
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './NavBar.css';
 
 interface NavBarProps {
   isVisible: boolean;
   toggleVisibility: () => void;
+  lists: string[];
+  onSelectList: (listName: string) => void;
+  onAddList: (listName: string) => void;
 }
 
-const NavBar = ({ isVisible, toggleVisibility }: NavBarProps) => {
-  const [lists, setLists] = useState<string[]>([]);
+const NavBar = ({ isVisible, toggleVisibility, lists, onSelectList, onAddList }: NavBarProps) => {
   const [listName, setListName] = useState("");
 
   const addList = () => {
     if(listName) {
-      setLists([...lists, listName]);
+      onAddList(listName);
       setListName("");
     }
   };
@@ -22,7 +22,7 @@ const NavBar = ({ isVisible, toggleVisibility }: NavBarProps) => {
   return (
     <div className={`navbar ${isVisible ? 'visible' : ''}`}>
       <button className="toggle-button" onClick={toggleVisibility}>
-        {isVisible ? '×' : '≡'} {/* Remplacer par des icônes si nécessaire */}
+        {isVisible ? '×' : '≡'}
       </button>
       {isVisible && (
         <>
@@ -35,7 +35,9 @@ const NavBar = ({ isVisible, toggleVisibility }: NavBarProps) => {
           <button onClick={addList}>Ajouter la liste</button>
           <div className="lists">
             {lists.map((list, index) => (
-              <div key={index}>{list}</div>
+              <div key={index} onClick={() => onSelectList(list)}>
+                {list}
+              </div>
             ))}
           </div>
         </>
