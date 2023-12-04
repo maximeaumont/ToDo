@@ -1,0 +1,31 @@
+.new-task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  padding: 8px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  position: relative;
+  width: 50vw;
+  transition: border-color 0.3s;
+  border: 2px solid #f2f2f2;
+  }
+  
+.new-task input {
+    flex: 1;
+    border: 1px solid #535bf2;
+    border-radius: 4px;
+    padding: 8px;
+    margin-right: 8px;
+}
+
+.new-task:hover {
+  border: 2px solid #535bf2;
+}
+
+@media screen and (max-width: 768px) {
+  .new-task {
+    width: 90vw; /* Supprimez la marge sur les côtés pour les écrans plus larges */
+  }
+}

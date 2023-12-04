@@ -1,0 +1,62 @@
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  padding: 8px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  position: relative;
+  width: 50vw;
+  transition: border-color 0.3s;
+  border: 2px solid #f2f2f2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.task:hover {
+  border: 2px solid #535bf2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task-checkbox {
+  margin-right: 8px;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid #535bf2;
+  position: relative;
+  cursor: pointer;
+}
+
+.task-checkbox:checked {
+  background-color: #535bf2;
+  border-color: #535bf2;
+}
+
+.task-checkbox:checked::before {
+  content: '\2713'; /* Code pour la coche */
+  font-size: 16px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.task-checkbox:checked + span {
+  color: #535bf2; /* Couleur du texte lorsque la checkbox est cochée */
+}
+
+@media screen and (max-width: 768px) {
+  .task {
+    width: 80vw; /* Supprimez la marge sur les côtés pour les écrans plus larges */
+  }
+}
+
+.edit-delete-container {
+  display: flex;
+  justify-content: space-between; /* Assurez-vous que les boutons sont bien espacés */
+  gap: 10px; /* Ajoutez un espace entre les boutons */
+}
