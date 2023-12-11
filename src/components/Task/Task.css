@@ -60,3 +60,31 @@
   justify-content: space-between; /* Assurez-vous que les boutons sont bien espacés */
   gap: 10px; /* Ajoutez un espace entre les boutons */
 }
+
+body.dark .task {
+  background-color: #333;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark .task:hover {
+  border-color: #777;
+}
+
+body.dark .task-checkbox {
+  border-color: #777;
+}
+
+body.dark .task-checkbox:checked {
+  background-color: #777;
+  border-color: #777;
+}
+
+body.dark .task-checkbox:checked + span {
+  color: #fff; /* Changement de la couleur du texte en mode sombre */
+}
+
+/* Ajoutez ce style pour modifier la couleur du texte lorsqu'une tâche est complétée en mode sombre */
+body.dark .task.completed span {
+  color: #777; /* Couleur du texte pour les tâches complétées en mode sombre */
+}

@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import TaskList from './components/TaskList/TaskList';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import './App.css';
+import { observer } from 'mobx-react-lite';
+import { themeStore } from './components/ThemeStore/ThemeStore';
+import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton';
 
 interface Task {
   text: string;
@@ -19,7 +22,8 @@ function App() {
     if (savedTasks) {
       setTasksByList(JSON.parse(savedTasks));
     }
-  }, []);
+    document.body.className = themeStore.theme;
+  }, [themeStore.theme]);
 
   const addTask = (newTaskText: string) => {
     if (currentList) {
@@ -66,7 +70,7 @@ function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${themeStore.theme}`}>
       <NavBar
         isVisible={navVisible}
         toggleVisibility={() => setNavVisible(!navVisible)}
@@ -81,8 +85,9 @@ function App() {
           <AddTaskForm onAdd={addTask} />
         </>
       )}
+      <ThemeToggleButton />
     </div>
   );
 }
 
-export default App;
+export default observer(App);
