@@ -84,3 +84,39 @@
 .button-container button:hover {
   background-color: #3e48cc;
 }
+
+
+body.dark .modal-content {
+  background-color: #333;
+  color: #fff;
+  border-color: #444;
+}
+
+body.dark .input-container input {
+  background-color: #444;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark .input-container input:focus {
+  border-color: #777;
+}
+
+body.dark .button-container button {
+  background-color: #333;
+  border-color: #333;
+  color: #fff;
+}
+
+body.dark .button-container button:hover {
+  background-color: #555;
+}
+
+body.dark .close-button {
+  color: #aaa;
+}
+
+body.dark .close-button:hover,
+body.dark .close-button:focus {
+  color: #fff;
+}
