@@ -1,5 +1,4 @@
-// EditTaskModal.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './EditTaskModal.css';
 
 interface EditTaskModalProps {
@@ -11,6 +10,11 @@ interface EditTaskModalProps {
 
 const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, onClose, task, onSave }) => {
   const [updatedTask, setUpdatedTask] = useState(task);
+
+  useEffect(() => {
+    // Mettre à jour la valeur lorsque la propriété task change
+    setUpdatedTask(task);
+  }, [task]);
 
   const handleSave = () => {
     onSave(updatedTask);

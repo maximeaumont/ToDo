@@ -33,10 +33,11 @@ function App() {
 
   const deleteTask = (index: number) => {
     if (currentList) {
-      const updatedTasks = [...(tasksByList[currentList] || [])];
-      updatedTasks.splice(index, 1);
-      setTasksByList({ ...tasksByList, [currentList]: updatedTasks });
-      localStorage.setItem('tasksByList', JSON.stringify({ ...tasksByList, [currentList]: updatedTasks }));
+      const currentTasks = tasksByList[currentList] || [];
+      const updatedTasks = [...currentTasks.slice(0, index), ...currentTasks.slice(index + 1)];
+      const newTasksByList = { ...tasksByList, [currentList]: updatedTasks };
+      setTasksByList(newTasksByList);
+      localStorage.setItem('tasksByList', JSON.stringify(newTasksByList));
     }
   };
 
