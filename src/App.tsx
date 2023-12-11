@@ -1,35 +1,85 @@
-// App.tsx
-import { useEffect, useState } from 'react';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import NavBar from './components/NavBar/NavBar';
 import TaskList from './components/TaskList/TaskList';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
+import './App.css';
+
+interface Task {
+  text: string;
+  isCompleted: boolean;
+}
 
 function App() {
+  const [tasksByList, setTasksByList] = useState<{ [key: string]: Task[] }>({});
+  const [currentList, setCurrentList] = useState<string | null>(null);
+  const [navVisible, setNavVisible] = useState(false);
+
   useEffect(() => {
-    document.title = 'Todo List'; // Mettez le titre souhaité ici
+    const savedTasks = localStorage.getItem('tasksByList');
+    if (savedTasks) {
+      setTasksByList(JSON.parse(savedTasks));
+    }
   }, []);
 
-  const [tasks, setTasks] = useState<string[]>([]);
-
-  const addTask = (newTask: string) => {
-    setTasks([...tasks, newTask]);
+  const addTask = (newTaskText: string) => {
+    if (currentList) {
+      const newTask = { text: newTaskText, isCompleted: false };
+      const updatedTasks = tasksByList[currentList] ? [...tasksByList[currentList], newTask] : [newTask];
+      const newTasksByList = { ...tasksByList, [currentList]: updatedTasks };
+      setTasksByList(newTasksByList);
+      localStorage.setItem('tasksByList', JSON.stringify(newTasksByList));
+    }
   };
 
   const deleteTask = (index: number) => {
-    const updatedTasks = [...tasks];
-    updatedTasks.splice(index, 1);
-    setTasks(updatedTasks);
+    if (currentList) {
+      const updatedTasks = [...(tasksByList[currentList] || [])];
+      updatedTasks.splice(index, 1);
+      setTasksByList({ ...tasksByList, [currentList]: updatedTasks });
+      localStorage.setItem('tasksByList', JSON.stringify({ ...tasksByList, [currentList]: updatedTasks }));
+    }
   };
 
-  const editTask = () => {
-    console.log('Edit');
+  const editTask = (index: number, newText: string) => {
+    if (currentList && tasksByList[currentList]) {
+      const updatedTasks = tasksByList[currentList].map((task, idx) =>
+        idx === index ? { ...task, text: newText } : task
+      );
+      setTasksByList({ ...tasksByList, [currentList]: updatedTasks });
+      localStorage.setItem('tasksByList', JSON.stringify({ ...tasksByList, [currentList]: updatedTasks }));
+    }
+  };
+
+  const toggleTaskCompletion = (index: number) => {
+    if (currentList && tasksByList[currentList]) {
+      const updatedTasks = tasksByList[currentList].map((task, idx) =>
+        idx === index ? { ...task, isCompleted: !task.isCompleted } : task
+      );
+      setTasksByList({ ...tasksByList, [currentList]: updatedTasks });
+      localStorage.setItem('tasksByList', JSON.stringify({ ...tasksByList, [currentList]: updatedTasks }));
+    }
+  };
+
+  const addList = (listName: string) => {
+    setTasksByList({ ...tasksByList, [listName]: [] });
   };
 
   return (
     <div className="app-container">
-      <h1>Todo List</h1>
-      <TaskList tasks={tasks} onDelete={deleteTask} onEdit={editTask} />
-      <AddTaskForm onAdd={addTask} />
+      <NavBar
+        isVisible={navVisible}
+        toggleVisibility={() => setNavVisible(!navVisible)}
+        lists={Object.keys(tasksByList)}
+        onSelectList={setCurrentList}
+        onAddList={addList}
+      />
+      <h1>Todo List - {currentList}</h1>
+      {currentList && (
+        <>
+          <TaskList tasks={tasksByList[currentList]} onDelete={deleteTask} onEdit={editTask} onToggleCompletion={toggleTaskCompletion} />
+          <AddTaskForm onAdd={addTask} />
+        </>
+      )}
     </div>
   );
 }
