@@ -23,3 +23,15 @@
     fill: #f2f2f2;
   }
   
+  body.dark .edit-button {
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+    fill: #fff; /* Changez la couleur du SVG en blanc pour le mode sombre */
+  }
+  
+  body.dark .edit-button:hover {
+    background-color: #555;
+    border-color: #555;
+  }
+

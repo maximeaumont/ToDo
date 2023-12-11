@@ -26,3 +26,15 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
   
+  body.dark .delete-button {
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+    fill: #fff; /* Couleur du SVG */
+  }
+  
+  body.dark .delete-button:hover {
+    background-color: #555;
+    border-color: #555;
+  }
+  
