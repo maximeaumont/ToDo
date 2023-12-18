@@ -1,0 +1,40 @@
+.theme-toggle-button {
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #4f6d7a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 5px;
+    cursor: pointer;
+    position: fixed;
+
+  }
+  
+  .slider {
+    background-color: #fff;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    transition: all 0.3s ease;
+    left: 4px; 
+
+  }
+  
+  .dark-mode .slider {
+    transform: translateX(26px); 
+  }
+  
+  .light-mode .slider {
+    transform: translateX(0);
+  }
+  
+  .toggle-icon {
+    font-size: 16px;
+  }
+  
