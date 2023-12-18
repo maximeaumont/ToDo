@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import TaskList from './components/TaskList/TaskList';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
+import EditListModal from './components/EditListModal/EditListModal'; // Assurez-vous que le chemin d'accès est correct
 import './App.css';
 import { observer } from 'mobx-react-lite';
 import { themeStore } from './components/ThemeStore/ThemeStore';
@@ -16,6 +17,8 @@ function App() {
   const [tasksByList, setTasksByList] = useState<{ [key: string]: Task[] }>({});
   const [currentList, setCurrentList] = useState<string | null>(null);
   const [navVisible, setNavVisible] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedListName, setSelectedListName] = useState("");
 
   useEffect(() => {
     const savedTasks = localStorage.getItem('tasksByList');
@@ -34,7 +37,7 @@ function App() {
       localStorage.setItem('tasksByList', JSON.stringify(newTasksByList));
     }
   };
-
+  
   const deleteTask = (index: number) => {
     if (currentList) {
       const currentTasks = tasksByList[currentList] || [];
@@ -44,7 +47,7 @@ function App() {
       localStorage.setItem('tasksByList', JSON.stringify(newTasksByList));
     }
   };
-
+  
   const editTask = (index: number, newText: string) => {
     if (currentList && tasksByList[currentList]) {
       const updatedTasks = tasksByList[currentList].map((task, idx) =>
@@ -54,7 +57,7 @@ function App() {
       localStorage.setItem('tasksByList', JSON.stringify({ ...tasksByList, [currentList]: updatedTasks }));
     }
   };
-
+  
   const toggleTaskCompletion = (index: number) => {
     if (currentList && tasksByList[currentList]) {
       const updatedTasks = tasksByList[currentList].map((task, idx) =>
@@ -66,7 +69,45 @@ function App() {
   };
 
   const addList = (listName: string) => {
-    setTasksByList({ ...tasksByList, [listName]: [] });
+    const newTasksByList = { ...tasksByList, [listName]: [] };
+    setTasksByList(newTasksByList);
+    localStorage.setItem('tasksByList', JSON.stringify(newTasksByList));
+  };
+
+  const handleEditListName = (newName: string) => {
+    if (selectedListName && newName && tasksByList[selectedListName]) {
+      const updatedTasksByList = { ...tasksByList, [newName]: tasksByList[selectedListName] };
+      delete updatedTasksByList[selectedListName];
+
+      setTasksByList(updatedTasksByList);
+      localStorage.setItem('tasksByList', JSON.stringify(updatedTasksByList));
+
+      if (currentList === selectedListName) {
+        setCurrentList(newName);
+      }
+    }
+    closeEditModal();
+  };
+
+  const handleDeleteList = (listName: string) => {
+    const updatedTasksByList = { ...tasksByList };
+    delete updatedTasksByList[listName];
+
+    setTasksByList(updatedTasksByList);
+    localStorage.setItem('tasksByList', JSON.stringify(updatedTasksByList));
+
+    if (currentList === listName) {
+      setCurrentList(null);
+    }
+  };
+
+  const openEditModal = (listName: string) => {
+    setSelectedListName(listName);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   return (
@@ -77,6 +118,14 @@ function App() {
         lists={Object.keys(tasksByList)}
         onSelectList={setCurrentList}
         onAddList={addList}
+        onOpenEditModal={openEditModal}
+        onDeleteList={handleDeleteList} // Passage de la méthode de suppression
+      />
+      <EditListModal 
+        isOpen={isEditModalOpen}
+        onClose={closeEditModal}
+        listName={selectedListName}
+        onSave={handleEditListName}
       />
       <h1>Todo List - {currentList}</h1>
       {currentList && (
@@ -91,3 +140,5 @@ function App() {
 }
 
 export default observer(App);
+
+

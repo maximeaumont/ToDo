@@ -2,7 +2,7 @@ import React from 'react';
 import './EditButton.css';
 
 interface EditButtonProps {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
 }
 
 const EditButton: React.FC<EditButtonProps> = ({ onClick }) => {

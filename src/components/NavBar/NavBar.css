@@ -122,3 +122,29 @@ body.dark .lists div {
 body.dark .lists div:hover {
   background-color: #3a3a3a;
 }
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  margin-top: 8px;
+  background-color: #e7f1ff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.list-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.list-name {
+  flex-grow: 1;
+}
+
+.list-controls {
+  display: flex;
+  gap: 10px;
+}

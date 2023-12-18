@@ -3,7 +3,7 @@ import React from 'react';
 import './DeleteButton.css';
 
 interface DeleteButtonProps {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent) => void;
 }
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ onClick }) => {
