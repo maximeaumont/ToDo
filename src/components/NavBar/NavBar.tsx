@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import EditButton from '../EditButton/EditButton'; // Assurez-vous que le chemin est correct
+import DeleteButton from '../DeleteButton/DeleteButton'; // Assurez-vous que le chemin est correct
 import './NavBar.css';
 
 interface NavBarProps {
@@ -7,13 +9,15 @@ interface NavBarProps {
   lists: string[];
   onSelectList: (listName: string) => void;
   onAddList: (listName: string) => void;
+  onOpenEditModal: (listName: string) => void;
+  onDeleteList: (listName: string) => void;
 }
 
-const NavBar = ({ isVisible, toggleVisibility, lists, onSelectList, onAddList }: NavBarProps) => {
+const NavBar = ({ isVisible, toggleVisibility, lists, onSelectList, onAddList, onOpenEditModal, onDeleteList }: NavBarProps) => {
   const [listName, setListName] = useState("");
 
   const addList = () => {
-    if(listName) {
+    if (listName) {
       onAddList(listName);
       setListName("");
     }
@@ -35,8 +39,14 @@ const NavBar = ({ isVisible, toggleVisibility, lists, onSelectList, onAddList }:
           <button onClick={addList}>Ajouter la liste</button>
           <div className="lists">
             {lists.map((list, index) => (
-              <div key={index} onClick={() => onSelectList(list)}>
-                {list}
+              <div key={index} className="list-item">
+                <div className="list-name" onClick={() => onSelectList(list)}>
+                  {list}
+                </div>
+                <div className="list-controls">
+                  <EditButton onClick={(e) => { e.stopPropagation(); onOpenEditModal(list); }} />
+                  <DeleteButton onClick={(e) => { e.stopPropagation(); onDeleteList(list); }} />
+                </div>
               </div>
             ))}
           </div>
