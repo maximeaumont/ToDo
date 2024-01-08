@@ -1,4 +1,5 @@
 // Task.tsx
+
 import React, { useState } from 'react';
 import EditButton from '../EditButton/EditButton';
 import DeleteButton from '../DeleteButton/DeleteButton';
@@ -6,9 +7,9 @@ import './Task.css';
 import EditTaskModal from '../EditTaskModal/EditTaskModal';
 
 interface TaskProps {
-  task: { text: string; isCompleted: boolean };
+  task: { text: string; dueDate?: Date; isCompleted: boolean };
   onDelete: () => void;
-  onEdit: (newText: string) => void;
+  onEdit: (newText: string, newDate?: Date) => void;
   onToggleCompletion: () => void;
 }
 
@@ -17,8 +18,9 @@ const Task: React.FC<TaskProps> = ({ task, onDelete, onEdit, onToggleCompletion 
 
   const handleEdit = () => {
     const newText = prompt("Edit Task", task.text);
+    const newDate = task.dueDate;
     if (newText !== null) {
-      onEdit(newText);
+      onEdit(newText, newDate);
     }
   };
 
@@ -38,7 +40,7 @@ const Task: React.FC<TaskProps> = ({ task, onDelete, onEdit, onToggleCompletion 
         <EditButton onClick={openEditModal} />
         <DeleteButton onClick={onDelete} />
       </div>
-      <EditTaskModal isOpen={isEditModalOpen} onClose={closeEditModal} task={task.text} onSave={onEdit} />
+      <EditTaskModal isOpen={isEditModalOpen} onClose={closeEditModal} task={task} onSave={(updatedTask) => onEdit(updatedTask.text, updatedTask.dueDate)} />
     </li>
   );
 };

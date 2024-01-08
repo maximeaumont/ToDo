@@ -4,16 +4,15 @@ import './EditTaskModal.css';
 interface EditTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
-  task: string;
-  onSave: (updatedTask: string) => void;
+  task: { text: string; dueDate?: Date };
+  onSave: (updatedTask: { text: string; dueDate?: Date }) => void;
 }
 
 const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, onClose, task, onSave }) => {
-  const [updatedTask, setUpdatedTask] = useState(task);
+  const [updatedTask, setUpdatedTask] = useState({ text: task.text, dueDate: task.dueDate });
 
   useEffect(() => {
-    // Mettre à jour la valeur lorsque la propriété task change
-    setUpdatedTask(task);
+    setUpdatedTask({ text: task.text, dueDate: task.dueDate });
   }, [task]);
 
   const handleSave = () => {
@@ -34,8 +33,18 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, onClose, task, on
         <div className="input-container">
           <input
             type="text"
-            value={updatedTask}
-            onChange={(e) => setUpdatedTask(e.target.value)}
+            value={updatedTask.text}
+            onChange={(e) => setUpdatedTask({ ...updatedTask, text: e.target.value })}
+          />
+        </div>
+        <div className="label-container">
+          <label>Date de la tâche:</label>
+        </div>
+        <div className="input-container">
+          <input
+            type="date"
+            value={updatedTask.dueDate ? updatedTask.dueDate.toISOString().split('T')[0] : ''}
+            onChange={(e) => setUpdatedTask({ ...updatedTask, dueDate: new Date(e.target.value) })}
           />
         </div>
         <div className="button-container">

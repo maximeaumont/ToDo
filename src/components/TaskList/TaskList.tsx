@@ -1,17 +1,18 @@
+// TaskList.tsx
+
 import React, { useEffect } from 'react';
 import Task from '../Task/Task';
 import './TaskList.css';
 
 interface TaskListProps {
-  tasks: { text: string; isCompleted: boolean }[];
+  tasks: { text: string; isCompleted: boolean; dueDate?: Date }[];
   onDelete: (index: number) => void;
-  onEdit: (index: number, newText: string) => void;
+  onEdit: (index: number, newText: string, newDate?: Date) => void;
   onToggleCompletion: (index: number) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, onDelete, onEdit, onToggleCompletion }) => {
   useEffect(() => {
-    // Logique à exécuter lorsque tasks est mis à jour
     console.log('Tasks have been updated:', tasks);
   }, [tasks]);
 
@@ -22,7 +23,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDelete, onEdit, onToggleCo
           key={index}
           task={task}
           onDelete={() => onDelete(index)}
-          onEdit={(newText) => onEdit(index, newText)}
+          onEdit={(newText, newDate) => onEdit(index, newText, newDate)}
           onToggleCompletion={() => onToggleCompletion(index)}
         />
       ))}

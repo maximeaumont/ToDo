@@ -11,6 +11,7 @@ import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton'
 interface Task {
   text: string;
   isCompleted: boolean;
+  dueDate?: Date;
 }
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
 
   const addTask = (newTaskText: string) => {
     if (currentList) {
-      const newTask = { text: newTaskText, isCompleted: false };
+      const newTask = { text: newTaskText, isCompleted: false, dueDate: new Date() };
       const updatedTasks = tasksByList[currentList] ? [...tasksByList[currentList], newTask] : [newTask];
       const newTasksByList = { ...tasksByList, [currentList]: updatedTasks };
       setTasksByList(newTasksByList);
@@ -47,11 +48,11 @@ function App() {
       localStorage.setItem('tasksByList', JSON.stringify(newTasksByList));
     }
   };
-  
-  const editTask = (index: number, newText: string) => {
+
+  const editTask = (index: number, newText: string, newDate?: Date) => {
     if (currentList && tasksByList[currentList]) {
       const updatedTasks = tasksByList[currentList].map((task, idx) =>
-        idx === index ? { ...task, text: newText } : task
+        idx === index ? { ...task, text: newText, dueDate: newDate} : task
       );
       setTasksByList({ ...tasksByList, [currentList]: updatedTasks });
       localStorage.setItem('tasksByList', JSON.stringify({ ...tasksByList, [currentList]: updatedTasks }));
@@ -108,6 +109,11 @@ function App() {
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem('tasksByList');
+    setTasksByList({});
   };
 
   return (
