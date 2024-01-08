@@ -41,11 +41,11 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, onClose, task, on
           <label>Date de la tâche:</label>
         </div>
         <div className="input-container">
-          <input
-            type="date"
-            value={updatedTask.dueDate ? updatedTask.dueDate.toISOString().split('T')[0] : ''}
-            onChange={(e) => setUpdatedTask({ ...updatedTask, dueDate: new Date(e.target.value) })}
-          />
+        <input
+          type="date"
+          value={updatedTask.dueDate ? new Date(updatedTask.dueDate).toISOString().split('T')[0] : ''}
+          onChange={(e) => setUpdatedTask({ ...updatedTask, dueDate: new Date(e.target.value) })}
+        />
         </div>
         <div className="button-container">
           <button onClick={handleSave}>Enregistrer</button>
