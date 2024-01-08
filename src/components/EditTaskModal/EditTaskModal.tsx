@@ -38,7 +38,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, onClose, task, on
           />
         </div>
         <div className="label-container">
-          <label>Date de la tâche:</label>
+          <label>Echéance de la tâche:</label>
         </div>
         <div className="input-container">
         <input

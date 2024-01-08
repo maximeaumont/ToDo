@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import TaskList from './components/TaskList/TaskList';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
-import EditListModal from './components/EditListModal/EditListModal'; // Assurez-vous que le chemin d'accès est correct
+import EditListModal from './components/EditListModal/EditListModal'; 
 import './App.css';
 import { observer } from 'mobx-react-lite';
 import { themeStore } from './components/ThemeStore/ThemeStore';
@@ -26,35 +26,49 @@ function App() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const formatDate = (date?: Date | string | number): string => {
+    return date ? new Date(date).toLocaleDateString('fr-FR') : '';
+  };
+  
+  const parseDate = (dateStr: string): Date | undefined => {
+    if (!dateStr) return undefined;
+    const [day, month, year] = dateStr.split('/').map(Number);
+    return new Date(year, month - 1, day);
+  };
+  
+
   const exportToCSV = () => {
     const csvData = Papa.unparse({
-      fields: ["listName", "text", "isCompleted"],
+      fields: ["listName", "text", "isCompleted", "dueDate"],
       data: Object.entries(tasksByList).flatMap(([listName, tasks]) =>
-        tasks.map(task => [listName, task.text, task.isCompleted])
+        tasks.map(task => [listName, task.text, task.isCompleted, formatDate(task.dueDate)])
       ),
     });
     const blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
     saveAs(blob, "tasks.csv");
   };
 
+
   const importFromCSV = (file: File) => {
     Papa.parse(file, {
+      encoding: "UTF-8",
       header: true,
       complete: (results) => {
         const importedTasks = results.data.reduce((acc: { [key: string]: Task[] }, row: any) => {
           if (row.listName && row.text) {
             acc[row.listName] = acc[row.listName] || [];
-            if (!acc[row.listName].some(task => task.text === row.text)) {
-              acc[row.listName].push({ text: row.text, isCompleted: row.isCompleted === "true" });
-            }
+            acc[row.listName].push({
+              text: row.text,
+              isCompleted: row.isCompleted === "true",
+              dueDate: parseDate(row.dueDate)
+            });
           }
           return acc;
-        }, { ...tasksByList }); 
+        }, { ...tasksByList });
         setTasksByList(importedTasks);
       }
     });
   };
-
 
 
   const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,7 +185,7 @@ function App() {
         onSelectList={setCurrentList}
         onAddList={addList}
         onOpenEditModal={openEditModal}
-        onDeleteList={handleDeleteList} // Passage de la méthode de suppression
+        onDeleteList={handleDeleteList} 
       />
       <EditListModal 
         isOpen={isEditModalOpen}

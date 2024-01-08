@@ -48,7 +48,6 @@ body.dark {
   color: #ffffff;
 }
 
-/* Bouton de changement de thème */
 .theme-toggle-button {
   position: fixed;
   top: 10px;
