@@ -4,15 +4,14 @@ import './EditTaskModal.css';
 interface EditTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
-  task: { text: string; dueDate?: Date }; // Update the task property
-  onSave: (updatedTask: { text: string; dueDate?: Date }) => void; // Update the onSave callback
+  task: { text: string; dueDate?: Date };
+  onSave: (updatedTask: { text: string; dueDate?: Date }) => void;
 }
 
 const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, onClose, task, onSave }) => {
   const [updatedTask, setUpdatedTask] = useState({ text: task.text, dueDate: task.dueDate });
 
   useEffect(() => {
-    // Update the value when the task property changes
     setUpdatedTask({ text: task.text, dueDate: task.dueDate });
   }, [task]);
 

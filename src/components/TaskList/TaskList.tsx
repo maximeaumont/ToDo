@@ -6,7 +6,7 @@ import './TaskList.css';
 
 interface TaskListProps {
   tasks: { text: string; isCompleted: boolean; dueDate?: Date }[];
-  onDelete: (index: number) => void; // Correct signature with the index parameter
+  onDelete: (index: number) => void;
   onEdit: (index: number, newText: string, newDate?: Date) => void;
   onToggleCompletion: (index: number) => void;
 }
@@ -22,7 +22,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDelete, onEdit, onToggleCo
         <Task
           key={index}
           task={task}
-          onDelete={() => onDelete(index)} // Pass the index to onDelete
+          onDelete={() => onDelete(index)}
           onEdit={(newText, newDate) => onEdit(index, newText, newDate)}
           onToggleCompletion={() => onToggleCompletion(index)}
         />

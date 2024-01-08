@@ -87,7 +87,6 @@ function App() {
           <AddTaskForm onAdd={addTask} />
         </>
       )}
-      <button onClick={clearLocalStorage}>Clear Local Storage</button>
     </div>
   );
 }
