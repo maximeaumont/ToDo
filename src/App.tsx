@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import TaskList from './components/TaskList/TaskList';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
@@ -7,6 +7,7 @@ import './App.css';
 interface Task {
   text: string;
   isCompleted: boolean;
+  dueDate?: Date;
 }
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
 
   const addTask = (newTaskText: string) => {
     if (currentList) {
-      const newTask = { text: newTaskText, isCompleted: false };
+      const newTask = { text: newTaskText, isCompleted: false, dueDate: new Date() };
       const updatedTasks = tasksByList[currentList] ? [...tasksByList[currentList], newTask] : [newTask];
       const newTasksByList = { ...tasksByList, [currentList]: updatedTasks };
       setTasksByList(newTasksByList);
@@ -41,10 +42,10 @@ function App() {
     }
   };
 
-  const editTask = (index: number, newText: string) => {
+  const editTask = (index: number, newText: string, newDate?: Date) => {
     if (currentList && tasksByList[currentList]) {
       const updatedTasks = tasksByList[currentList].map((task, idx) =>
-        idx === index ? { ...task, text: newText } : task
+        idx === index ? { ...task, text: newText, dueDate: newDate} : task
       );
       setTasksByList({ ...tasksByList, [currentList]: updatedTasks });
       localStorage.setItem('tasksByList', JSON.stringify({ ...tasksByList, [currentList]: updatedTasks }));
@@ -65,6 +66,11 @@ function App() {
     setTasksByList({ ...tasksByList, [listName]: [] });
   };
 
+  const clearLocalStorage = () => {
+    localStorage.removeItem('tasksByList');
+    setTasksByList({});
+  };
+
   return (
     <div className="app-container">
       <NavBar
@@ -81,6 +87,7 @@ function App() {
           <AddTaskForm onAdd={addTask} />
         </>
       )}
+      <button onClick={clearLocalStorage}>Clear Local Storage</button>
     </div>
   );
 }
