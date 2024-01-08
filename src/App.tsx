@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import TaskList from './components/TaskList/TaskList';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
@@ -6,6 +6,9 @@ import './App.css';
 import { observer } from 'mobx-react-lite';
 import { themeStore } from './components/ThemeStore/ThemeStore';
 import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton';
+import Papa from 'papaparse';
+import { saveAs } from 'file-saver';
+import { FaFileImport, FaFileExport } from 'react-icons/fa';
 
 interface Task {
   text: string;
@@ -16,6 +19,47 @@ function App() {
   const [tasksByList, setTasksByList] = useState<{ [key: string]: Task[] }>({});
   const [currentList, setCurrentList] = useState<string | null>(null);
   const [navVisible, setNavVisible] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const exportToCSV = () => {
+    const csvData = Papa.unparse({
+      fields: ["listName", "text", "isCompleted"],
+      data: Object.entries(tasksByList).flatMap(([listName, tasks]) =>
+        tasks.map(task => [listName, task.text, task.isCompleted])
+      ),
+    });
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
+    saveAs(blob, "tasks.csv");
+  };
+
+  const importFromCSV = (file: File) => {
+    Papa.parse(file, {
+      header: true,
+      complete: (results) => {
+        const importedTasks = results.data.reduce((acc: { [key: string]: Task[] }, row: any) => {
+          if (row.listName && row.text) {
+            acc[row.listName] = acc[row.listName] || [];
+            if (!acc[row.listName].some(task => task.text === row.text)) {
+              acc[row.listName].push({ text: row.text, isCompleted: row.isCompleted === "true" });
+            }
+          }
+          return acc;
+        }, { ...tasksByList }); 
+        setTasksByList(importedTasks);
+      }
+    });
+  };
+
+
+
+  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      importFromCSV(file);
+    }
+  };
+
 
   useEffect(() => {
     const savedTasks = localStorage.getItem('tasksByList');
@@ -69,6 +113,8 @@ function App() {
     setTasksByList({ ...tasksByList, [listName]: [] });
   };
 
+
+
   return (
     <div className={`app-container ${themeStore.theme}`}>
       <NavBar
@@ -85,6 +131,21 @@ function App() {
           <AddTaskForm onAdd={addTask} />
         </>
       )}
+      <div className="import-export-buttons">
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileInputChange}
+          style={{ display: 'none' }}
+        />
+        <button onClick={() => fileInputRef.current && fileInputRef.current.click()}>
+          <FaFileImport /> Import CSV
+        </button>
+        <button onClick={exportToCSV}>
+          <FaFileExport /> Export CSV
+        </button>
+      </div>
+
       <ThemeToggleButton />
     </div>
   );
