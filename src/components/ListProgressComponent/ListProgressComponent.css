@@ -10,3 +10,11 @@
     background: #535bf2;
     border-radius: 5px;
 }
+
+body.dark .progress-bar-empty {
+    background-color: #777; 
+}
+
+body.dark .progress-bar-full {
+    background-color: #333; 
+}
