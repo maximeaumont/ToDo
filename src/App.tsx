@@ -10,6 +10,7 @@ import ThemeToggleButton from './components/ThemeToggleButton/ThemeToggleButton'
 import Papa from 'papaparse';
 import { saveAs } from 'file-saver';
 import { FaFileImport, FaFileExport } from 'react-icons/fa';
+import ListProgress from './components/ListProgressComponent/ListProgressComponent';
 
 interface Task {
   text: string;
@@ -196,6 +197,7 @@ function App() {
       <h1>Todo List - {currentList}</h1>
       {currentList && (
         <>
+          <ListProgress tasks={tasksByList[currentList]} />
           <TaskList tasks={tasksByList[currentList]} onDelete={deleteTask} onEdit={editTask} onToggleCompletion={toggleTaskCompletion} />
           <AddTaskForm onAdd={addTask} />
         </>
