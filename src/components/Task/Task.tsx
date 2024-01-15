@@ -1,10 +1,10 @@
 // Task.tsx
 
 import React, { useState } from 'react';
-import EditButton from '../EditButton/EditButton';
-import DeleteButton from '../DeleteButton/DeleteButton';
 import './Task.css';
 import EditTaskModal from '../EditTaskModal/EditTaskModal';
+import EditButton from '../EditButton/EditButton';
+import DeleteButton from '../DeleteButton/DeleteButton';
 
 interface TaskProps {
   task: { text: string; dueDate?: Date; isCompleted: boolean };

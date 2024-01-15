@@ -1,8 +1,8 @@
 // TaskList.tsx
 
 import React, { useEffect } from 'react';
-import Task from '../Task/Task';
 import './TaskList.css';
+import Task from '../Task/Task';
 
 interface TaskListProps {
   tasks: { text: string; isCompleted: boolean; dueDate?: Date }[];
