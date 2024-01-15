@@ -35,7 +35,7 @@ const Task: React.FC<TaskProps> = ({ task, onDelete, onEdit, onToggleCompletion 
   return (
     <li className={`task ${task.isCompleted ? 'completed' : ''}`}>
       <input type="checkbox" className="task-checkbox" checked={task.isCompleted} onChange={onToggleCompletion} />
-      <span>{task.text.length > 50 ? `${task.text.substring(0, 50)}...` : task.text}</span>
+      <span>{task.text.length > 40 ? `${task.text.substring(0, 40)}...` : task.text}</span>
       <div className="edit-delete-container">
         <EditButton onClick={openEditModal} />
         <DeleteButton onClick={onDelete} />
