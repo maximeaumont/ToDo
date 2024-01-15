@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import EditButton from '../EditButton/EditButton'; // Assurez-vous que le chemin est correct
-import DeleteButton from '../DeleteButton/DeleteButton'; // Assurez-vous que le chemin est correct
+import EditButton from '../EditButton/EditButton'; 
+import DeleteButton from '../DeleteButton/DeleteButton';
+import FavoriteButton from '../FavoriteButton/FavoriteButton';
 import './NavBar.css';
 
 interface NavBarProps {
@@ -13,8 +14,19 @@ interface NavBarProps {
   onDeleteList: (listName: string) => void;
 }
 
-const NavBar = ({ isVisible, toggleVisibility, lists, onSelectList, onAddList, onOpenEditModal, onDeleteList }: NavBarProps) => {
+const NavBar = ({
+  isVisible, 
+  toggleVisibility, 
+  lists, 
+  onSelectList, 
+  onAddList, 
+  onOpenEditModal, 
+  onDeleteList
+}: NavBarProps) => {
   const [listName, setListName] = useState("");
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+
 
   const addList = () => {
     if (listName) {
@@ -22,6 +34,18 @@ const NavBar = ({ isVisible, toggleVisibility, lists, onSelectList, onAddList, o
       setListName("");
     }
   };
+
+  const toggleFavorite = (list: string) => {
+    setFavorites(prev => {
+      if (prev.includes(list)) {
+        return prev.filter(fav => fav !== list);
+      } else {
+        return [list, ...prev];
+      }
+    });
+  };
+
+  const sortedLists = [...favorites.filter(fav => lists.includes(fav)), ...lists.filter(list => !favorites.includes(list))];
 
   return (
     <div className={`navbar ${isVisible ? 'visible' : ''}`}>
@@ -38,12 +62,16 @@ const NavBar = ({ isVisible, toggleVisibility, lists, onSelectList, onAddList, o
           />
           <button onClick={addList}>Ajouter la liste</button>
           <div className="lists">
-            {lists.map((list, index) => (
+            {sortedLists.map((list, index) => (
               <div key={index} className="list-item">
                 <div className="list-name" onClick={() => onSelectList(list)}>
                   {list}
                 </div>
                 <div className="list-controls">
+                  <FavoriteButton 
+                    onClick={(e) => { e.stopPropagation(); toggleFavorite(list); }} 
+                    isFavorite={favorites.includes(list)}
+                  />
                   <EditButton onClick={(e) => { e.stopPropagation(); onOpenEditModal(list); }} />
                   <DeleteButton onClick={(e) => { e.stopPropagation(); onDeleteList(list); }} />
                 </div>
