@@ -9,7 +9,7 @@
   box-sizing: border-box;
   transform: translateX(-100%);
   z-index: 1000;
-  background-color: #f2f2f2;
+  background-color: white;
 }
 
 .navbar.visible {
@@ -56,14 +56,6 @@ button {
 
 button:hover {
   background-color: #747bff;
-}
-
-.lists div {
-  padding: 5px;
-  margin-top: 8px;
-  background-color: #e7f1ff;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -119,9 +111,17 @@ body.dark .lists div:hover {
   justify-content: space-between;
   padding: 5px;
   margin-top: 8px;
-  background-color: #e7f1ff;
   border-radius: 4px;
   cursor: pointer;
+  background-color: #f2f2f2;
+  border: 2px solid #f2f2f2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.list-item:hover {
+  border: 2px solid #535bf2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .list-name {
