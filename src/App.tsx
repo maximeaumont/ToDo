@@ -77,6 +77,7 @@ function App() {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
       importFromCSV(file);
+      event.target.value = '';
     }
   };
 
