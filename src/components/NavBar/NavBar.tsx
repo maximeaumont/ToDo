@@ -41,7 +41,7 @@ const NavBar = ({ isVisible, toggleVisibility, lists, onSelectList, onAddList, o
             {lists.map((list, index) => (
               <div key={index} className="list-item">
                 <div className="list-name" onClick={() => onSelectList(list)}>
-                  {list}
+                  {list.length > 10 ? `${list.substring(0, 10)}...` : list}
                 </div>
                 <div className="list-controls">
                   <EditButton onClick={(e) => { e.stopPropagation(); onOpenEditModal(list); }} />
