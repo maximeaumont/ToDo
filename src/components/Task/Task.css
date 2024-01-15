@@ -51,7 +51,7 @@
 
 @media screen and (max-width: 768px) {
   .task {
-    width: 80vw; /* Supprimez la marge sur les côtés pour les écrans plus larges */
+    width: 90vw; /* Supprimez la marge sur les côtés pour les écrans plus larges */
   }
 }
 
