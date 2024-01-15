@@ -58,6 +58,14 @@ button:hover {
   background-color: #747bff;
 }
 
+body.dark button {
+  background-color: #333;
+}
+
+body.dark button:hover {
+  background-color: #444;
+}
+
 @media screen and (max-width: 768px) {
   .navbar {
     width: 300px;
@@ -88,22 +96,10 @@ body.dark input[type="text"]:focus {
   border-color: #777;
 }
 
-body.dark button {
-  background-color: #333;
-  color: #fff;
-}
-
-body.dark button:hover {
-  background-color: #555;
-}
-
 body.dark .lists div {
   background-color: #2d2d2d;
 }
 
-body.dark .lists div:hover {
-  background-color: #3a3a3a;
-}
 
 .list-item {
   display: flex;
@@ -122,6 +118,16 @@ body.dark .lists div:hover {
 .list-item:hover {
   border: 2px solid #535bf2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark .list-item {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+body.dark .list-item:hover {
+  border-color: #777;
 }
 
 .list-name {
@@ -147,16 +153,12 @@ body.dark .lists div:hover {
   height: 1em;
 }
 
-.favorite-button:hover {
-  background-color: rgba(255, 191, 0, 0.1); 
-}
-
 .favorite-button.is-favorite svg {
   fill: #ffbf00;
 }
 
 body.dark .favorite-button svg {
-  fill: #ffc61a; 
+  fill: #444; 
 }
 
 body.dark .favorite-button.is-favorite svg {

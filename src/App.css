@@ -86,6 +86,16 @@ body.dark {
   font-size: 14px;
 }
 
+body.dark .import-export-buttons button {
+  background-color: #333;
+  color: white;
+}
+
+body.dark .import-export-buttons button:hover {
+  background-color: #444;
+  color: white;
+}
+
 .import-export-buttons button svg {
   margin-right: 5px;
 }
