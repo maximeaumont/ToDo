@@ -1,7 +1,7 @@
+
+import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import { useEffect, useState, useRef } from 'react';
 import NavBar from './components/NavBar/NavBar';
-import TaskList from './components/TaskList/TaskList';
-import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import EditListModal from './components/EditListModal/EditListModal'; 
 import './App.css';
 import { observer } from 'mobx-react-lite';
@@ -11,6 +11,7 @@ import Papa from 'papaparse';
 import { saveAs } from 'file-saver';
 import { FaFileImport, FaFileExport } from 'react-icons/fa';
 import ListProgress from './components/ListProgressComponent/ListProgressComponent';
+import TaskList from './components/TaskList/TaskList';
 
 interface Task {
   text: string;

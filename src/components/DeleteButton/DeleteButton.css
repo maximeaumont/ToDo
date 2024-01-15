@@ -2,7 +2,6 @@
 .delete-button {
     border-radius: 8px;
     border: 1px solid transparent;
-    padding: 0.6em 1.2em;
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
@@ -12,11 +11,7 @@
     border-color: #f2f2f2;
     fill: #213547;
     margin-left: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    padding: 0.8em 1.4em; /* Agrandissez le padding */
-    font-size: 1.2em; /* Augmentez la taille de la police */
-    margin-left: 12px; /* Augmentez l'espacement entre les boutons */
   }
   
   .delete-button:hover {

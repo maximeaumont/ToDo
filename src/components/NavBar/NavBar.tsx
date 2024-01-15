@@ -65,7 +65,7 @@ const NavBar = ({
             {sortedLists.map((list, index) => (
               <div key={index} className="list-item">
                 <div className="list-name" onClick={() => onSelectList(list)}>
-                  {list}
+                  {list.length > 10 ? `${list.substring(0, 10)}...` : list}
                 </div>
                 <div className="list-controls">
                   <FavoriteButton 
