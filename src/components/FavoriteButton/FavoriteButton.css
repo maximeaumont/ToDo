@@ -1,0 +1,19 @@
+.favorite-button {
+    background-color: transparent;
+    border: none;
+    padding: 0.3em;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.25s;
+  }
+  
+  .favorite-button svg {
+    fill: #bbbbbb; 
+    width: 1em;
+    height: 1em;
+  }
+  
+  .favorite-button.is-favorite svg {
+    fill: #ffd700; 
+  }
+  
