@@ -67,10 +67,14 @@ function App() {
           }
           return acc;
         }, { ...tasksByList });
+        
         setTasksByList(importedTasks);
+  
+        localStorage.setItem('tasksByList', JSON.stringify(importedTasks));
       }
     });
   };
+  
 
 
   const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,0 +1,7 @@
+listName,text,isCompleted,dueDate
+Courses,Fruits et legumes,false,15/03/2024
+Courses,Pain,false,15/03/2024
+Travail,Preparer la reunion,true,16/03/2024
+Travail,Envoyer le rapport,false,17/03/2024
+Maison,Nettoyer la cuisine,false,18/03/2024
+Maison,Arroser les plantes,false,19/03/2024
